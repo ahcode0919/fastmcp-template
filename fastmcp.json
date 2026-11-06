@@ -1,0 +1,15 @@
+{
+  "$schema": "https://gofastmcp.com/public/schemas/fastmcp.json/v1.json",
+  "source": {
+    "path": "src/example/calculator.py",
+    "entrypoint": "mcp"
+  },
+  "environment": {
+    "type": "uv",
+    "python": ">=3.15",
+    "dependencies": ["fastmcp"]
+  },
+  "deployment": {
+    "transport": "stdio"
+  }
+}

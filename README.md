@@ -1,4 +1,4 @@
-# Python Project Template
+# FastMCP Project Template
 
 [![CI](https://github.com/ahcode0919/python-project-template/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/ahcode0919/python-project-template/actions/workflows/python.yml)
 [![Security](https://github.com/ahcode0919/python-project-template/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/ahcode0919/python-project-template/actions/workflows/security.yml)
@@ -82,6 +82,48 @@ labels; other repository labels (e.g. `good first issue`, `question`) are ignore
 * To release, run the **Release** workflow from the Actions tab. It bumps the version in
   `pyproject.toml`/`uv.lock`, updates `CHANGELOG.md`, tags the release, and uploads build artifacts
 
+## MCP Platforms
+
+Directories, marketplaces, and registries where MCP servers are listed or published.
+
+| Platform                                                                    | Description                                                         |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| [Official MCP Registry](https://registry.modelcontextprotocol.io)           | Official registry for discovering and publishing MCP servers        |
+| [MCP Servers (GitHub)](https://github.com/modelcontextprotocol/servers)     | Reference servers plus links to community-built servers             |
+| [Smithery](https://smithery.ai)                                             | Catalog of MCP servers with managed authentication and credentials  |
+| [Glama](https://glama.ai/mcp/servers)                                       | Large registry of open-source MCP servers, clients, and connectors  |
+| [mcp.so](https://mcp.so)                                                    | Directory of MCP servers and clients with setup guides              |
+| [PulseMCP](https://www.pulsemcp.com)                                        | Directory of MCP servers, clients, use cases, and news              |
+| [MCP Market](https://www.mcpmarket.com)                                     | Directory of MCP servers, clients, and agent skills                 |
+| [MCP Servers](https://mcpservers.org)                                       | Directory of MCP servers                                            |
+| [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)      | Curated community list of MCP servers                               |
+
 ## Usage
 
-* Usage Notes
+The MCP server is exposed as the `example` script (`[project.scripts]` in `pyproject.toml`), which
+runs the server over stdio.
+
+* `uv run example` - run the server from the project
+* `uv run python -m example` - run the server as a module
+* `just dev` - run the server with the MCP Inspector (requires Node / `npx`)
+
+### Client Configuration
+
+After publishing the package (`uv build`, then `uv publish`), MCP clients can run it with `uvx`
+without a separate install step:
+
+```json
+{
+  "mcpServers": {
+    "calculator": {
+      "command": "uvx",
+      "args": ["example"]
+    }
+  }
+}
+```
+
+For Claude Code: `claude mcp add calculator -- uvx example`
+
+Rename the package (`name` in `pyproject.toml`) and the script to something unique before publishing
+to PyPI.

@@ -26,6 +26,9 @@ jobs:
       run: |
         uv tool install rust-just
         just sync
+    - name: Build
+      run: |
+        uv run fastmcp inspect
     - name: Lint
       run: |
         just ci-lint
