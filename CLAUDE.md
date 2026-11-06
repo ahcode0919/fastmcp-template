@@ -4,23 +4,16 @@ Python project template using `uv` for environment/dependency management and `ju
 
 ## Commands
 
-- `just setup` - install Homebrew tools (`Brewfile`) and sync the project
-- `just sync` - install all dependency groups into `.venv`
-- `just lint` - type check (ty), lint + autofix (ruff), format (ruff), spell check (codespell)
-- `just ci-lint` - same checks without modifying files (used to verify, not fix)
-- `just test` - run pytest with coverage (fails under 98%)
-- `just zizmor` - audit GitHub Actions workflows for security issues
-- `just git-leaks` - scan staged changes for secrets
-- `just set-github-labels` - create/update the release labels on GitHub (`scripts/sync-labels.sh`, needs `gh`)
-- `uv add <pkg>` / `uv add --dev <pkg>` - add a runtime / dev dependency (never edit `uv.lock` by hand)
-- `uv run example` - run the app entry point
+See the [Project Commands](README.md#project-commands) section of `README.md`.
 
 Run `just lint` and `just test` before considering a change done.
 
 ## Layout
 
 - `src/example/` - the package (src layout, built with `uv_build`, installed editable by `uv sync`)
-- `src/example/__init__.py` - `main()` entry point, exposed as the `example` script
+- `src/example/calculator.py` - the FastMCP server (`mcp`) and `main()` entry point, exposed as the
+  `example` script
+- `src/example/__main__.py` - runs `main()` for `python -m example`
 - `tests/` - pytest tests; import the package as `from example.<module> import ...`
 - `prek.toml` - git hook config (`prek install` to enable)
 - `.github/workflows/` - `python.yml` (lint + tests), `security.yml` (zizmor, gitleaks),
@@ -32,10 +25,7 @@ Run `just lint` and `just test` before considering a change done.
 
 ## Conventions
 
-- Python >= 3.14; ruff line length 100, double quotes
-- Docstrings required in `src/` (ruff `D` rules), not in `tests/`
-- Type hints on public functions; code must pass `ty check`
-- Renaming the project means updating `[project] name`, the `src/<name>/` folder, and `[project.scripts]` together
+@pyproject.toml
 
 ## CI, security, and releases
 
@@ -47,6 +37,5 @@ Run `just lint` and `just test` before considering a change done.
 - uv is pinned to 0.13.x in four places that must stay in sync: `[tool.uv] required-version` and the
   `uv_build` requirement in `pyproject.toml`, `setup-uv` `version` in the workflows, and the uv image in
   `.devcontainer/Dockerfile`
-- Do not edit `CHANGELOG.md` or bump `[project] version` by hand; the Release workflow does both
 - Every PR needs a release label (GitHub PR label, not a title/commit prefix): `breaking`, `feature`,
   `enhancement`, `bug`, `fix`, `chore`, `ci`, `dependencies`, `documentation`, `refactor`, or `skip-changelog`
